@@ -80,9 +80,6 @@ public class AmendActivity extends AppCompatActivity implements View.OnClickList
         return false;
     }
 
-    /*
-     * 初始化函数
-     */
     @SuppressLint("SetTextI18n")
     void init(){
         mySql = new MySql(this);
@@ -115,18 +112,12 @@ public class AmendActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    /*
-     * 返回主界面
-     */
     void intentStart(){
         Intent intent = new Intent(AmendActivity.this,MainActivity.class);
         startActivity(intent);
         this.finish();
     }
 
-    /*
-     * 保存函数
-     */
     boolean updateFunction(String body){
 
         SQLiteDatabase db;
@@ -138,7 +129,7 @@ public class AmendActivity extends AppCompatActivity implements View.OnClickList
             flag = false;
         }
         if(flag){
-            // update
+
             db = mySql.getWritableDatabase();
             values = new ContentValues();
             values.put(MySql.ARTICLE,body);
@@ -151,12 +142,6 @@ public class AmendActivity extends AppCompatActivity implements View.OnClickList
         return flag;
     }
 
-    /*
-     * 弹窗函数
-     * @param title
-     * @param body
-     * @param createDate
-     */
     void showDialog(final String body){
         dialog = new AlertDialog.Builder(AmendActivity.this);
         dialog.setTitle("提示");

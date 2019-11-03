@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         myBaseAdapter = new MyBaseAdapter(this, noteList, R.layout.list_item);
         mylistview.setAdapter(myBaseAdapter);
-        // 设置点击监听
         mylistview.setOnItemClickListener(this);
         mylistview.setOnItemLongClickListener(this);
     }
@@ -141,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     class MyBaseAdapter extends BaseAdapter {
-            private List<Note> noteList;//数据集合
+            private List<Note> noteList;
             private Context context;
             private int layoutId;
 
@@ -194,14 +193,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Note note = noteList.get(position);
                 String tile = note.getTitleName();
                 viewHolder.titleView.setText((position + 1) + "." + (tile.length() > 7 ? tile.substring(0, 7) + "..." : tile));
-//            viewHolder.titleView.setText(tile);
                 String body = note.getTextBody();
                 viewHolder.bodyView.setText(body.length() > 13 ? body.substring(0, 12) + "..." : body);
-//            viewHolder.bodyView.setText(body);
 
                 return convertView;
             }
-
+//
             class ViewHolder {
                 TextView titleView;
                 TextView bodyView;

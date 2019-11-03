@@ -41,9 +41,6 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         init();
     }
 
-    /*
-     * 初始化函数
-     */
     void init(){
         mySql = new MySql(this);
         btnBack = findViewById(R.id.button_back);
@@ -57,21 +54,17 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         Date date = new Date(System.currentTimeMillis());
     }
 
-    /*
-     *  返回键监听，消除误操作BUG
-     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             String title;
             String body;
-            String createDate;
+
             title = editTitle.getText().toString();
             body = editBody.getText().toString();
-            //当返回按键被按下
             if (!isShowIng()){
                 if (!"".equals(title)||!"".equals(body)){
-                    showDialog(title,body,"code:111");
+                    showDialog(title,body);
                     clearDialog();
                 } else {
                     intentStart();
@@ -81,10 +74,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         return false;
     }
 
-    /*
-     *  按钮点击事件监听
-     *
-     */
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onClick(View v) {
@@ -94,13 +84,13 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         body = editBody.getText().toString();
         switch (v.getId()){
             case R.id.button_save:
-                if (saveFunction(title,body,"code:111")){
+                if (saveFunction(title,body)){
                     intentStart();
                 }
                 break;
             case R.id.button_back:
                 if (!"".equals(title)||!"".equals(body)){
-                    showDialog(title,body,"code:111");
+                    showDialog(title,body);
                     clearDialog();
                 } else {
                     intentStart();
@@ -113,19 +103,13 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    /*
-     * 返回主界面
-     */
     void intentStart(){
         Intent intent = new Intent(EditActivity.this,MainActivity.class);
         startActivity(intent);
         this.finish();
     }
 
-    /*
-     * 备忘录保存函数
-     */
-    boolean saveFunction(String title, String body, String createDate){
+    boolean saveFunction(String title, String body){
 
         boolean flag = true;
         if ("".equals(title)){
@@ -144,7 +128,6 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         if(flag){
             SQLiteDatabase db;
             ContentValues values;
-            //  存储备忘录信息
             db = mySql.getWritableDatabase();
             values = new ContentValues();
             values.put(MySql.TITLE,title);
@@ -156,13 +139,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         return flag;
     }
 
-    /*
-     * 弹窗函数
-     * @param title
-     * @param body
-     * @param createDate
-     */
-    void showDialog(final String title, final String body, final String createDate){
+    void showDialog(final String title, final String body ){
         dialog = new AlertDialog.Builder(EditActivity.this);
         dialog.setTitle("提示");
         dialog.setMessage("是否保存当前编辑内容");
@@ -170,7 +147,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
                 new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                saveFunction(title, body, createDate);
+                saveFunction(title, body);
                 intentStart();
                     }
                 });
@@ -185,16 +162,10 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         dialog.show();
     }
 
-    /*
-     *  清空弹窗
-     */
     void clearDialog(){
         dialog = null;
     }
 
-    /*
-     *  判断是否弹窗是否显示
-     */
     boolean isShowIng() {
         if (dialog != null) {
             return true;

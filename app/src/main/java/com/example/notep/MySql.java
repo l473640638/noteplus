@@ -10,8 +10,6 @@ public class MySql extends SQLiteOpenHelper {
     public final static String ID = "_id";
     public final static String TITLE = "title_name";
     public final static String  ARTICLE= "text_body";
-    //  public final static String RECORD_TIME = "create_time";
-    //  public final static String NOTICE_TIME ="notice_time";
     public MySql(Context context) {
         super(context, "test.db", null, 1);
     }
